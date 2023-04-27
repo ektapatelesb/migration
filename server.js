@@ -10,8 +10,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/employees',employeesCtrl.getEmployees);
-app.get('/employee',employeesCtrl.getPage)
-app.get('/sort',employeesCtrl.getSort)
+app.get('/employee',employeesCtrl.getPage);
+app.get('/sort',employeesCtrl.getSort);
+app.get('/search',employeesCtrl.getSearch);
 
 
 app.listen(8080,()=>{

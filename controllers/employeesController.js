@@ -33,5 +33,21 @@ var getSort = async(req,res)=>{
      res.status(200).json({data:data,sort:sort,page:page,limit:limit,offset:offset});
 }
 
+var getSearch = async(req,res)=>{
+  var search = req.query.search;
+  const data = await Employees.findAll({
+    where: {
+      
 
-module.exports={getEmployees,getPage,getSort}
+        firstname: {
+          [Op.like]: `%${search}%`
+        },
+          lastName: {
+            [Op.like]: `%${search}%`
+          }
+    }
+  })
+  res.status(200).json({data:data,search:search});
+}
+
+module.exports={getEmployees,getPage,getSort,getSearch}
