@@ -37,8 +37,6 @@ var getSearch = async(req,res)=>{
   var search = req.query.search;
   const data = await Employees.findAll({
     where: {
-      
-
         firstname: {
           [Op.like]: `%${search}%`
         },

@@ -2,6 +2,8 @@ const express = require('express')
 var bodeParser = require('body-parser')
 const app = express()
 require('./models/employees')
+require('./models/users')
+var userCtrl = require('./controllers/userController')
 var employeesCtrl = require('./controllers/employeesController')
 app.use(bodeParser.json())
 
@@ -13,6 +15,9 @@ app.get('/employees',employeesCtrl.getEmployees);
 app.get('/employee',employeesCtrl.getPage);
 app.get('/sort',employeesCtrl.getSort);
 app.get('/search',employeesCtrl.getSearch);
+
+
+app.get('/paranoid',userCtrl.paranoidUser)
 
 
 app.listen(8080,()=>{
