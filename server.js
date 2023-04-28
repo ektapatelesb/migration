@@ -5,19 +5,24 @@ require('./models/employees')
 require('./models/users')
 var userCtrl = require('./controllers/userController')
 var employeesCtrl = require('./controllers/employeesController')
+var associationCtrl = require('./controllers/associationController')
 app.use(bodeParser.json())
 
 app.get('/', function (req, res) {
   res.send('Hello World')
 })
-
+//employeecontroller's end points
 app.get('/employees',employeesCtrl.getEmployees);
 app.get('/employee',employeesCtrl.getPage);
 app.get('/sort',employeesCtrl.getSort);
 app.get('/search',employeesCtrl.getSearch);
 
-
+//usercontroller's end points
 app.get('/paranoid',userCtrl.paranoidUser)
+
+//associationcontroller's end points
+app.get('/one-to-one',associationCtrl.getOneToOne)
+app.get('/oto',associationCtrl.OneToOne)
 
 
 app.listen(8080,()=>{

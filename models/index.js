@@ -39,6 +39,9 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.employees = require('./employees')(sequelize,DataTypes)
+// db.sequelize.sync({force:true});
 
+// db.employees = require('./employees')(sequelize,DataTypes)
+db.users.hasOne(db.contact,{foreignKey: 'user_id'});
+db.contact.belongsTo(db.users);
 module.exports = db;
