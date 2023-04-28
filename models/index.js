@@ -44,4 +44,7 @@ db.Sequelize = Sequelize;
 // db.employees = require('./employees')(sequelize,DataTypes)
 db.users.hasOne(db.contact,{foreignKey: 'user_id'});
 db.contact.belongsTo(db.users);
+
+db.users.hasMany(db.contact,{foreignKey: 'user_id'});
+db.contact.belongsTo(db.users);
 module.exports = db;

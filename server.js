@@ -20,9 +20,13 @@ app.get('/search',employeesCtrl.getSearch);
 //usercontroller's end points
 app.get('/paranoid',userCtrl.paranoidUser)
 
-//associationcontroller's end points
+//associationcontroller's end points for one-to-one 
 app.get('/one-to-one',associationCtrl.getOneToOne)
-app.get('/oto',associationCtrl.OneToOne)
+app.get('/oto',associationCtrl.oneToOne)
+
+//associationcontroller's end points for one-to-many
+app.get('/one-to-many',associationCtrl.getOneToMany)
+app.get('/otm',associationCtrl.oneToMany)
 
 
 app.listen(8080,()=>{
