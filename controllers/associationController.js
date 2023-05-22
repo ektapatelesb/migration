@@ -2,8 +2,11 @@ const {Sequelize,Op}=require('sequelize');
 var db = require('../models/index')
 const users = require('../models/users');
 const contacts =require('../models/contact');
+const user_contacts = require("../models/user_contacts");
+
 var Users = db.users;
 var Contacts = db.contact;
+var userContacts = db.user_contacts;
 //----------------------------------------------------------------
 var getOneToOne= async(req,res)=>{
   const data = await Users.findAll({
@@ -53,5 +56,10 @@ var oneToMany = async(req,res)=>{
   await Contacts.create({parmanent_address:'pragatinagar',current_address:'sciencecity',user_id:24})
   res.status(200).json({data:1});
 }
+//------------------------------------------------------------------------------------------
+var getManyToMany = async(req,res)=>{
+  const data = await Users.findAll({})
+    res.status(200).json({data:data});
+}
 //----------------------------------------------------------------------------------------
-module.exports={getOneToOne,oneToOne,getOneToMany,oneToMany}
+module.exports={getOneToOne,oneToOne,getOneToMany,oneToMany,getManyToMany}

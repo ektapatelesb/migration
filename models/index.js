@@ -41,10 +41,35 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 // db.sequelize.sync({force:true});
 
-// db.employees = require('./employees')(sequelize,DataTypes)
+db.employees = require('./employees')(sequelize,DataTypes)
 db.users.hasOne(db.contact,{foreignKey: 'user_id'});
 db.contact.belongsTo(db.users);
 
 db.users.hasMany(db.contact,{foreignKey: 'user_id'});
 db.contact.belongsTo(db.users);
+
+db.users.belongsToMany(db.contact, { through: 'user_contacts' });
+db.contact.belongsToMany(db.users, { through: 'user_contacts' });
+
+//polymorphic one-to-many
+db.image.hasMany(db.comments,{
+  foreignKey:'commentableId',
+  constraints:false,
+  scope:{
+    commentableType:'image'
+  }
+});
+db.videos.hasMany(db.comments,{
+  foreignKey:'commentableId',
+  constraints:false,
+  scope:{
+    commentableType:'video'
+  }
+});
+
+db.comments.belongsTo(db.image,{
+  foreignKey:'commentableId',constraints:false
+});
+db.comments.belongsTo(db.videos,{foreignKey:'commentableId',constraints:false});
+// console.log(db);
 module.exports = db;
