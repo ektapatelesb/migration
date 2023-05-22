@@ -21,6 +21,7 @@ app.get('/search',employeesCtrl.getSearch);
 //usercontroller's end points
 // app.get('/paranoid',userCtrl.paranoidUser)
 app.get('/polymorphic',userCtrl.polymorphic);
+app.get('/polymorphic-many',userCtrl.polymorphicMany)
 
 
 //associationcontroller's end points for one-to-one 

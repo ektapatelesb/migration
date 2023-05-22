@@ -51,5 +51,8 @@ let data = await Comment.findAll({
   })
   res.status(200).json({data:data});
 }
-
-module.exports={polymorphic}
+var polymorphicMany = async(req,res)=>{
+  let data = 'polymorphic many to many'
+  res.status(200).json({data:data});
+}
+module.exports={polymorphic,polymorphicMany}
