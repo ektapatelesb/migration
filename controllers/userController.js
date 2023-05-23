@@ -1,6 +1,8 @@
 const {Sequelize,Op}=require('sequelize');
 var db = require('../models/index');
-const user = require('../models/user');
+// const user = require('../models/user');
+// const contacts =require('../models/contact');
+
 // const tags = require('../models/tags');
 // const users = require('../models/users');
 // const  comment = require('../models/comments');
@@ -9,6 +11,7 @@ const user = require('../models/user');
 
 
 var Users = db.users;
+var Contacts = db.contact;
 // var paranoidUser = async (req,res)=>{
 //   // var data = await Users.create({firstName:'rutvi', lastName:'patel'})
 //   //force:true will do the hard delete
@@ -31,7 +34,7 @@ const Image = db.image;
 const Comment = db.comments;
 const Video = db.videos;
 const Tags = db.tags;
-const tag_taggable = db.tag_taggable;
+// const tag_taggable = db.tag_taggable;
 
 
 var polymorphic = async (req,res)=>{
@@ -83,4 +86,18 @@ var scopes = async(req,res)=>{
   res.status(200).json({data:data});
 
 }
-module.exports={polymorphic,polymorphicMany,scopes}
+
+var loadingUser = async(req,res)=>{
+  // var data = await Users.create({firstName:'maitri',lastName:'oza'})
+  // if(data && data.id){
+  //  var data1= await Contacts.create({'parmanent_address':'vadnagar','current_address':'goa','userId':data.id})
+  // }
+  var data = await Contacts.findAll({
+   
+    include:[{model:Users}]
+  })
+ 
+  res.status(200).json({data:data})
+}
+
+module.exports={polymorphic,polymorphicMany,scopes,loadingUser}

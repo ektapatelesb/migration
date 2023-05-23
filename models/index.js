@@ -42,14 +42,14 @@ db.Sequelize = Sequelize;
 // db.sequelize.sync({force:true});
 
 db.employees = require('./employees')(sequelize,DataTypes)
-db.users.hasOne(db.contact,{foreignKey: 'user_id'});
-db.contact.belongsTo(db.users);
+// db.users.hasOne(db.contact,{foreignKey: 'user_id'});
+// db.contact.belongsTo(db.users);
 
 db.users.hasMany(db.contact,{foreignKey: 'user_id'});
-db.contact.belongsTo(db.users);
+db.contact.belongsTo(db.users,{foreignKey:'user_id'});
 
-db.users.belongsToMany(db.contact, { through: 'user_contacts' });
-db.contact.belongsToMany(db.users, { through: 'user_contacts' });
+// db.users.belongsToMany(db.contact, { through: 'user_contacts' });
+// db.contact.belongsToMany(db.users, { through: 'user_contacts' });
 
 //polymorphic one-to-many
 db.image.hasMany(db.comments,{

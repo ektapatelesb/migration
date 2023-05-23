@@ -23,6 +23,8 @@ app.get('/search',employeesCtrl.getSearch);
 app.get('/polymorphic',userCtrl.polymorphic);
 app.get('/polymorphic-many',userCtrl.polymorphicMany)
 app.get('/scopes',userCtrl.scopes)
+app.get('/loading',userCtrl.loadingUser);
+
 
 
 //associationcontroller's end points for one-to-one 
