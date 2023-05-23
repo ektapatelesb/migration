@@ -127,5 +127,13 @@ db.tags.belongsToMany(db.videos,{
   constraints:false
 })
 
+//--------scopes--------
+
+db.users.addScope('checkdata',{
+  where:{
+    lastName: 'patel'
+  }
+})
+
 // console.log(db);
 module.exports = db;

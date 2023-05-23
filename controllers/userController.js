@@ -1,5 +1,6 @@
 const {Sequelize,Op}=require('sequelize');
 var db = require('../models/index');
+const user = require('../models/user');
 // const tags = require('../models/tags');
 // const users = require('../models/users');
 // const  comment = require('../models/comments');
@@ -7,7 +8,7 @@ var db = require('../models/index');
 // const  video = require('../models/videos');
 
 
-// var Users = db.users;
+var Users = db.users;
 // var paranoidUser = async (req,res)=>{
 //   // var data = await Users.create({firstName:'rutvi', lastName:'patel'})
 //   //force:true will do the hard delete
@@ -76,4 +77,10 @@ let data = await Tags.findAll({
 })
   res.status(200).json({data:data});
 }
-module.exports={polymorphic,polymorphicMany}
+
+var scopes = async(req,res)=>{
+  let data = await Users.scope('checkdata').findAll({})
+  res.status(200).json({data:data});
+
+}
+module.exports={polymorphic,polymorphicMany,scopes}
