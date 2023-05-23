@@ -71,5 +71,61 @@ db.comments.belongsTo(db.image,{
   foreignKey:'commentableId',constraints:false
 });
 db.comments.belongsTo(db.videos,{foreignKey:'commentableId',constraints:false});
+
+//Polymorphic many-to-many
+
+//image  to tags
+
+db.image.belongsToMany(db.tags,{
+  through:{
+  model: db.tag_taggable,
+  scope:{
+    taggableType: 'image'
+  }
+},
+foreignKey:'taggableId',
+constraints:false
+});
+
+//tag to image
+
+db.tags.belongsToMany(db.image,{
+  through:{
+    model:db.tag_taggable,
+    unique:false,
+    scope:{
+      taggableType:'image'
+    }
+  },
+  foreignKey:'tagId',
+  constraints:false
+})
+
+//video to tag
+db.videos.belongsToMany(db.tags,{through:{
+  model: db.tag_taggable,
+  unique:false,
+  scope:{
+    taggableType: 'video'
+  }
+},
+foreignKey:'taggableId',
+constraints:false
+});
+
+//tag to video
+ 
+db.tags.belongsToMany(db.videos,{
+  through:{
+    model:db.tag_taggable,
+    unique:false,
+    scope:{
+      taggableType:'video'
+    }
+  },
+  foreignKey:'tagId',
+  constraints:false
+})
+
 // console.log(db);
 module.exports = db;

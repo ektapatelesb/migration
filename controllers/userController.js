@@ -1,5 +1,6 @@
 const {Sequelize,Op}=require('sequelize');
 var db = require('../models/index');
+// const tags = require('../models/tags');
 // const users = require('../models/users');
 // const  comment = require('../models/comments');
 // const   image = require('../models/image');
@@ -28,6 +29,9 @@ var db = require('../models/index');
 const Image = db.image;
 const Comment = db.comments;
 const Video = db.videos;
+const Tags = db.tags;
+const tag_taggable = db.tag_taggable;
+
 
 var polymorphic = async (req,res)=>{
 
@@ -51,8 +55,25 @@ let data = await Comment.findAll({
   })
   res.status(200).json({data:data});
 }
+
+
 var polymorphicMany = async(req,res)=>{
-  let data = 'polymorphic many to many'
+  // for image  to tag----
+
+  // let data = await Image.findAll({
+  //   include:[Tags]
+  // });
+
+  //for video to tag--------
+
+//  let data = await Video.findAll({
+//     include:[Tags]
+//   });
+
+//Tag to video or image
+let data = await Tags.findAll({
+  include:[Video,Image]
+})
   res.status(200).json({data:data});
 }
 module.exports={polymorphic,polymorphicMany}
