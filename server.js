@@ -19,11 +19,12 @@ app.get('/sort',employeesCtrl.getSort);
 app.get('/search',employeesCtrl.getSearch);
 
 //usercontroller's end points
-// app.get('/paranoid',userCtrl.paranoidUser)
+// app.get('/paranoid',userCtrl.paranoidUser);
 app.get('/polymorphic',userCtrl.polymorphic);
 app.get('/polymorphic-many',userCtrl.polymorphicMany)
 app.get('/scopes',userCtrl.scopes)
 app.get('/loading',userCtrl.loadingUser);
+app.get('/create-with-association',userCtrl.createUsers);
 
 
 

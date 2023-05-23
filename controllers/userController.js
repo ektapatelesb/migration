@@ -100,4 +100,48 @@ var loadingUser = async(req,res)=>{
   res.status(200).json({data:data})
 }
 
-module.exports={polymorphic,polymorphicMany,scopes,loadingUser}
+var createUsers = async(req,res)=>{
+//for inserting single data in two tables-------
+
+  //  await Contacts.create({
+  //   parmanent_address : 'dahod',
+  //   current_address: 'chanashma',
+  //   users:{
+  //     firstName:'krupal',
+  //     lastName:'kumar'
+  //   }
+  //  },{
+  //   include:[db.contactUser]
+  //  })
+
+  //for inserting multiple data in two tables-------
+
+    await Contacts.bulkCreate([{
+      parmanent_address : 'denap',
+      current_address: 'visnagar',
+      users:{
+        firstName:'palak',
+        lastName:'roy'
+      }
+     },{
+      parmanent_address : 'deesa',
+      current_address: 'vadnagar',
+      users:{
+        firstName:'pal',
+        lastName:'ray'
+      }
+     }],{
+    include:[db.contactUser]
+   })
+
+
+   var data = await Users.findAll({
+    include:{
+      model:Contacts
+    }
+   })
+  res.status(200).json({data:data})
+
+}
+
+module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers}

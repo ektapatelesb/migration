@@ -45,8 +45,12 @@ db.employees = require('./employees')(sequelize,DataTypes)
 // db.users.hasOne(db.contact,{foreignKey: 'user_id'});
 // db.contact.belongsTo(db.users);
 
+// db.users.hasMany(db.contact,{foreignKey: 'user_id'});
+// db.contact.belongsTo(db.users,{foreignKey:'user_id'});
+
 db.users.hasMany(db.contact,{foreignKey: 'user_id'});
-db.contact.belongsTo(db.users,{foreignKey:'user_id'});
+db.contactUser = db.contact.belongsTo(db.users,{foreignKey:'user_id',as:'users'})
+
 
 // db.users.belongsToMany(db.contact, { through: 'user_contacts' });
 // db.contact.belongsToMany(db.users, { through: 'user_contacts' });
