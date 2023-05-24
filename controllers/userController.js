@@ -34,6 +34,8 @@ const Image = db.image;
 const Comment = db.comments;
 const Video = db.videos;
 const Tags = db.tags;
+const Customers = db.customers;
+const Profile = db.profile;
 // const tag_taggable = db.tag_taggable;
 
 
@@ -144,4 +146,37 @@ var createUsers = async(req,res)=>{
 
 }
 
-module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers}
+var mnAssociationUser = async(req,res)=>{
+  //CREATE DIFFERENT QUERY  FOR INDIVIDUAL TABLE----------
+  // const amidala = await Customers.create({ username: 'p4dm3', points: 1000 });
+  // const queen = await Profile.create({ name: 'Queen' });
+  // await amidala.addProfile(queen, { through: { selfGranted: true } });
+  // const result = await  Customers.findOne({
+  //   where: { username: 'p4dm3' },
+  //   include: Profile
+  // });
+  // console.log(result);
+
+  //ENTRY USING SINGLE CREATE QUERY---------------------
+
+  // const amidala = await Customers.create({
+  //   username: 'p4dm3',
+  //   points: 1000,
+  //   profiles: [{
+  //     name: 'Queen',
+  //     User_Profile: {
+  //       selfGranted: true
+  //     }
+  //   }]
+  // }, {
+  //   include: Profile
+  // });
+  
+  // const result = await Customers.findOne({
+  //   where: { username: 'p4dm3' },
+  //   include: Profile
+  // });
+ 
+  res.status(200).json({data:result})
+}
+module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers,mnAssociationUser}

@@ -39,7 +39,7 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-// db.sequelize.sync({force:true});
+// db.sequelize.sync({force:false});
 
 db.employees = require('./employees')(sequelize,DataTypes)
 // db.users.hasOne(db.contact,{foreignKey: 'user_id'});
@@ -138,6 +138,10 @@ db.users.addScope('checkdata',{
     lastName: 'patel'
   }
 })
+
+//m:n association
+db.customers.belongsToMany(db.profile,{through:'User_Profiles'});
+db.profile.belongsToMany(db.customers,{through: 'User_Profiles'});
 
 // console.log(db);
 module.exports = db;
