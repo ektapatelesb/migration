@@ -36,6 +36,11 @@ const Video = db.videos;
 const Tags = db.tags;
 const Customers = db.customers;
 const Profile = db.profile;
+const Player = db.Player;
+const Game = db.Game;
+const Team = db.Team;
+const GameTeam = db.gameTeam;
+const PlayerGameTeam = db.playerGameTeam;
 // const tag_taggable = db.tag_taggable;
 
 
@@ -179,4 +184,60 @@ var mnAssociationUser = async(req,res)=>{
  
   res.status(200).json({data:result})
 }
-module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers,mnAssociationUser}
+
+var m2m2mUser = async(req,res)=>{
+
+  await Player.bulkCreate([
+    { username: 's0me0ne' },
+    { username: 'empty' },
+    { username: 'greenhead' },
+    { username: 'not_spock' },
+    { username: 'bowl_of_petunias' }
+  ]);
+  await Game.bulkCreate([
+    { name: 'The Big Clash' },
+    { name: 'Winter Showdown' },
+    { name: 'Summer Beatdown' }
+  ]);
+  await Team.bulkCreate([
+    { name: 'The Martians' },
+    { name: 'The Earthlings' },
+    { name: 'The Plutonians' }
+  ]);
+  await GameTeam.bulkCreate([
+    { GameId: 1, TeamId: 1 },   // this GameTeam will get id 1
+    { GameId: 1, TeamId: 2 },   // this GameTeam will get id 2
+    { GameId: 2, TeamId: 1 },   // this GameTeam will get id 3
+    { GameId: 2, TeamId: 3 },   // this GameTeam will get id 4
+    { GameId: 3, TeamId: 2 },   // this GameTeam will get id 5
+    { GameId: 3, TeamId: 3 }    // this GameTeam will get id 6
+  ]);
+  await PlayerGameTeam.bulkCreate([
+    // In 'Winter Showdown' (i.e. GameTeamIds 3 and 4):
+    { PlayerId: 1, GameTeamId: 3 },   // s0me0ne played for The Martians
+    { PlayerId: 3, GameTeamId: 3 },   // greenhead played for The Martians
+    { PlayerId: 4, GameTeamId: 4 },   // not_spock played for The Plutonians
+    { PlayerId: 5, GameTeamId: 4 }    // bowl_of_petunias played for The Plutonians
+  ]);
+
+  const data = await Game.findOne({
+    where: {
+      name: "Winter Showdown"
+    },
+    include: {
+      model: GameTeam,
+      include: [
+        {
+          model: Player,
+          through: { attributes: [] } // Hide unwanted `PlayerGameTeam` nested object from results
+        },
+        Team
+      ]
+    }
+  });
+
+  res.status(200).json({data:data})
+
+}
+
+module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers,mnAssociationUser,m2m2mUser}

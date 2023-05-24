@@ -48,8 +48,8 @@ db.employees = require('./employees')(sequelize,DataTypes)
 // db.users.hasMany(db.contact,{foreignKey: 'user_id'});
 // db.contact.belongsTo(db.users,{foreignKey:'user_id'});
 
-db.users.hasMany(db.contact,{foreignKey: 'user_id'});
-db.contactUser = db.contact.belongsTo(db.users,{foreignKey:'user_id',as:'users'})
+// db.users.hasMany(db.contact,{foreignKey: 'user_id'});
+// db.contactUser = db.contact.belongsTo(db.users,{foreignKey:'user_id',as:'users'})
 
 
 // db.users.belongsToMany(db.contact, { through: 'user_contacts' });
@@ -139,9 +139,27 @@ db.users.addScope('checkdata',{
   }
 })
 
-//m:n association
+//m:n associations
 db.customers.belongsToMany(db.profile,{through:'User_Profiles'});
 db.profile.belongsToMany(db.customers,{through: 'User_Profiles'});
+
+//m2m2m associations
+
+//team-game (table:gameTeam)
+db.Team.belongsToMany(db.Team,{as:'Team',foreignKey:'TeamId',through:db.gameTeam});
+db.Game.belongsToMany(db.Team,{as:'Game',foreignKey:'GameId',through:db.gameTeam});
+db.gameTeam.belongsTo(db.Game);
+db.gameTeam.belongsTo(db.Team);
+db.Team.hasMany(db.gameTeam);
+db.Game.hasMany(db.gameTeam);
+
+//player-gameTeam (table:playergameTeam)
+db.Player.belongsToMany(db.gameTeam,{through:db.playerGameTeam});
+db.gameTeam.belongsToMany(db.Player,{through:db.playerGameTeam});
+db.playerGameTeam.belongsTo(db.Player);
+db.playerGameTeam.belongsTo(db.gameTeam);
+db.Player.hasMany(db.playerGameTeam);
+db.gameTeam.hasMany(db.playerGameTeam);
 
 // console.log(db);
 module.exports = db;
