@@ -27,7 +27,8 @@ app.get('/loading',userCtrl.loadingUser);
 app.get('/create-with-association',userCtrl.createUsers);
 app.get('/m-n-associations',userCtrl.mnAssociationUser);
 app.get('/m2m2m',userCtrl.m2m2mUser);
-
+app.get('/hooks',userCtrl.hooks);
+app.get('/transactions',userCtrl.transactions)
 
 
 //associationcontroller's end points for one-to-one 

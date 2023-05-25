@@ -21,7 +21,26 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'users',
-    paranoid:true
+    paranoid:true,
+    // hooks:{
+    //   beforeValidate:(users,Option)=>{
+    //     users.firstName = 'changed  hook'
+    //     console.log("hooks called");
+    //   },
+    //   afterValidate:(users,options)=>{
+    //     users.email = 'emailchanged@gmail.com'
+    //   }
+    // }
+
   });
+  //second method
+  // users.addHook('beforeValidate','customname',(users,options)=>{
+  //   users.firstName ='new way for hooks';
+  // });
+
+  //third method
+  // users.afterValidate('myHookLast',(users,options)=>{
+  //   users.firstName = 'third hook';
+  // })
   return users;
 };

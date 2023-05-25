@@ -1,4 +1,5 @@
 const {Sequelize,Op}=require('sequelize');
+const { sequelize } = require('../models/index');
 var db = require('../models/index');
 // const user = require('../models/user');
 // const contacts =require('../models/contact');
@@ -239,5 +240,31 @@ var m2m2mUser = async(req,res)=>{
   res.status(200).json({data:data})
 
 }
+var hooks = async (req,res)=>{
+  let data = await Users.create({firstName:'demo hooks1',lastName:'last hooks1',email:'hooks1@gmail.com'});
+  res.status(200).json({data:data})
 
-module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers,mnAssociationUser,m2m2mUser}
+}
+
+var transactions = async (req,res)=>{
+  const t = await sequelize.transaction();
+  // try{
+  //   const user = await Users.create({firstName:'transaction',lastName:'concept',email:'example@gmail.com'},{
+
+  //     transaction:t
+  //   });
+  //   console.log('commit');
+  //   t.commit();
+  // }
+  // catch(e){
+  //   console.log('rollback');
+  //   t.rollback();
+  // }
+  let data = await Users.findAll({
+    transaction:t
+  })
+  res.status(200).json({data:data})
+
+}
+
+module.exports={polymorphic,polymorphicMany,scopes,loadingUser,createUsers,mnAssociationUser,m2m2mUser,hooks,transactions}
